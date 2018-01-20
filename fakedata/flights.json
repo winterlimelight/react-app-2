@@ -1,0 +1,14 @@
+[
+    { "FlightNumber": "NZ478", "From": "AKL", "To": "WLG", "Aircraft": "A320", "Passengers": 143, "On": "20180120" },
+    { "FlightNumber": "NZ478", "From": "AKL", "To": "WLG", "Aircraft": "A320", "Passengers": 110, "On": "20180121" },
+    { "FlightNumber": "NZ478", "From": "AKL", "To": "WLG", "Aircraft": "A320", "Passengers": 74, "On": "20180122" },
+    { "FlightNumber": "NZ479", "From": "WLG", "To": "AKL", "Aircraft": "A320", "Passengers": 143, "On": "20180120" },
+    { "FlightNumber": "NZ479", "From": "WLG", "To": "AKL", "Aircraft": "A320", "Passengers": 143, "On": "20180121" },
+    { "FlightNumber": "NZ479", "From": "WLG", "To": "AKL", "Aircraft": "A320", "Passengers": 143, "On": "20180122" },
+    { "FlightNumber": "NZ5111", "From": "WLG", "To": "HLZ", "Aircraft": "AT72", "Passengers": 44, "On": "20180120" },
+    { "FlightNumber": "NZ5111", "From": "WLG", "To": "HLZ", "Aircraft": "AT72", "Passengers": 67, "On": "20180121" },
+    { "FlightNumber": "NZ5111", "From": "WLG", "To": "HLZ", "Aircraft": "AT72", "Passengers": 50, "On": "20180122" },
+    { "FlightNumber": "NZ5112", "From": "HLZ", "To": "WLG", "Aircraft": "AT72", "Passengers": 33, "On": "20180120" },
+    { "FlightNumber": "NZ5112", "From": "HLZ", "To": "WLG", "Aircraft": "AT72", "Passengers": 65, "On": "20180121" },
+    { "FlightNumber": "NZ5112", "From": "HLZ", "To": "WLG", "Aircraft": "AT72", "Passengers": 54, "On": "20180122" }
+]
