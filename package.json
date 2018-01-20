@@ -6,7 +6,7 @@
   "author": "",
   "license": "ISC",
   "scripts": {
-    "start:dev": "webpack-dev-server --hot"
+    "start:dev": "webpack-dev-server"
   },
   "dependencies": {
     "@types/c3": "^0.4.50",

@@ -28,8 +28,8 @@ export class PassengerCountChart extends React.Component<P, {}> {
         }
     }
 
-    public componentWillReceiveProps(newProps: any) {
-        // TODO not sure if .props is updated at this stage. maybe componentWillUpdate?
+    public componentDidUpdate(prevProps: P, prevState: P) {
+        console.log("componentDidUpdate props " + JSON.stringify(this.props));
         this.setChart();
     }
 
@@ -39,7 +39,8 @@ export class PassengerCountChart extends React.Component<P, {}> {
                 bindto: this.el,
                 data: { x: 'destinations', columns: [] },
                 grid: { y: { lines: [{ value: 0 }] } },
-                axis: { x: { type: 'category' } }
+                legend: { position: 'right' },
+                axis: { x: { type: 'category', label: { text: 'Destination', position: 'outer-center' } } }
             });
         }
 
@@ -60,6 +61,7 @@ export class PassengerCountChart extends React.Component<P, {}> {
         });
 
         this.chart.load({
+            unload: true,
             type: 'bar',
             columns: [['destinations'].concat(destinations)].concat(dataCols)
         });
