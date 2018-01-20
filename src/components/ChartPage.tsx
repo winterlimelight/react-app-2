@@ -1,13 +1,6 @@
 import * as React from "react";
-
-export interface IFlight {
-    "FlightNumber": string,
-    "From": string,
-    "To": string,
-    "Aircraft": string,
-    "Passengers": number,
-    "On": string
-}
+import { IFlight } from "../schema";
+import { PassengerCountChart } from "./PassengerCountChart";
 
 export interface IFlightChartPage extends IFlight {
     flights: IFlight[];
@@ -17,7 +10,7 @@ export interface IFlightChartPage extends IFlight {
 
 export class ChartPage extends React.Component<{}, IFlightChartPage> {
 
-    constructor(props:any) {
+    constructor(props: any) {
         super(props);
         this.state = {
             error: null,
@@ -38,14 +31,15 @@ export class ChartPage extends React.Component<{}, IFlightChartPage> {
 
     render() {
         const { error, isLoaded, flights } = this.state;
-        if (error) {
-            return <div>Error: {error.message}</div>;
-        } else if (!isLoaded) {
+        if (error)
+            return <div>Unable to load data. Error: {error.message}</div>;
+        if (!isLoaded)
             return <div>Loading...</div>;
-        } else {
-            return (
-                <div>TODO</div>
-            );
-        }
+
+        return (
+            <div>
+                <PassengerCountChart flights={this.state.flights} />
+            </div>
+        );
     }
 }
