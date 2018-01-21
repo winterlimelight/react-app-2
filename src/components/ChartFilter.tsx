@@ -1,17 +1,14 @@
 import * as React from "react";
 import * as _ from "lodash";
-import { IFlight } from "../schema";
+import { IFlight, IChartFilter } from "../schema";
 import { ChangeEvent } from "react";
 
 type P = { flights: IFlight[], onFilterChange: Function};
 
-export interface IFilterState {
-    origin: string;
-}
 
 const noFilter = { origin: "" };
 
-export class Filters extends React.Component<P, IFilterState> {
+export class ChartFilter extends React.Component<P, IChartFilter> {
 
     constructor(props: P) {
         super(props);
@@ -44,7 +41,7 @@ export class Filters extends React.Component<P, IFilterState> {
                     <label>
                         Origin:
                         <select value={this.state.origin} onChange={ev => this.onOriginChange(ev)}>
-                            {this.createSelectItems()}
+                            {this.createSelectItems(this.props.flights)}
                         </select>
                     </label>
                     <input type="submit" value="Apply" />
@@ -53,8 +50,8 @@ export class Filters extends React.Component<P, IFilterState> {
         );
     }
 
-    private createSelectItems() {
-        let origins = [""].concat(_.uniq(this.props.flights.map(f => f.From)));
+    private createSelectItems(flights:IFlight[]) {
+        let origins = [""].concat(_.uniq(flights.map(f => f.From)));
         return origins.map(f => <option key={f} value={f}>{f}</option>)
     } 
 }
