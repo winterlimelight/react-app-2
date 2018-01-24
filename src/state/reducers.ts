@@ -1,17 +1,27 @@
 import { combineReducers, AnyAction, Reducer } from "redux";
-import { Requestable, IFlight, IChartFilter, IApplicationState } from "../schema";
+import { Requestable, IFlight, IChartFilter, IApplicationState, FetchStatus } from "../schema";
 import * as ACTIONS from "./actions";
+import * as _ from "lodash";
 
 function flights(state: Requestable<IFlight[]>, action: AnyAction): Requestable<IFlight[]> {
     switch (action.type) {
-        case ACTIONS.ADD_FLIGHT:
-            return { isFetching: state.isFetching, items: [...state.items, action.flight] }
+        case ACTIONS.SET_FLIGHT:
+            let items = [...state.items];
+            let inx = _.findIndex(items, f => f.Id == action.flight.Id);
+            if(inx > 0)
+                items.splice(inx, 1, action.flight);
+            else
+                state.items.push(action.flight);
+            return { fetchStatus: state.fetchStatus, items: items }
+
         case ACTIONS.REQUEST_FLIGHTS:
-            return { isFetching: true, items: null };
+            return { fetchStatus: FetchStatus.Fetching, items: null };
+
         case ACTIONS.RECEIVED_FLIGHTS:
-            return { isFetching: false, items: action.flights };
+            // TODO .Error if state or type indicates error...
+            return { fetchStatus: FetchStatus.Success, items: action.flights };
     }
-    return state || { isFetching: false, items: null };
+    return state || { fetchStatus: FetchStatus.NotStarted, items: null };
 }
 
 function chartFilter(state: IChartFilter, action: AnyAction) {

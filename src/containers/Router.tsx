@@ -2,6 +2,7 @@ import * as React from "react";
 import { HashRouter, Route, NavLink } from "react-router-dom"
 
 import ChartPage from "./ChartPage";
+import DataEntryPage from "./DataEntryPage";
 
 const homePage = () =>
     <div>
@@ -10,9 +11,9 @@ const homePage = () =>
     </div>
 
 const dataPage = () =>
-    <div>
+    <div className="data-entry">
         <h1>Data Entry</h1>
-        TODO
+        <DataEntryPage />
     </div>
 
 const chartPage = () =>

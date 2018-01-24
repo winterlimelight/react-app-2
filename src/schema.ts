@@ -1,15 +1,18 @@
+export enum FetchStatus { NotStarted, Fetching, Success, Error }
+
 export class Requestable<T> {
-    public isFetching: boolean;
+    public fetchStatus: FetchStatus;
     public items: T;
 }
 
 export interface IFlight {
-    "FlightNumber": string,
-    "From": string,
-    "To": string,
-    "Aircraft": string,
-    "Passengers": number,
-    "On": string
+    "Id": number;
+    "FlightNumber": string;
+    "From": string;
+    "To": string;
+    "Aircraft": string;
+    "Passengers": number;
+    "On": string;
 }
 
 export interface IChartFilter {
@@ -17,6 +20,6 @@ export interface IChartFilter {
 }
 
 export interface IApplicationState {
-    flights: Requestable<IFlight[]>,
-    chartFilter: IChartFilter
+    flights: Requestable<IFlight[]>;
+    chartFilter: IChartFilter;
 }

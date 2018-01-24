@@ -1,6 +1,6 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import { IFlight, IChartFilter, Requestable } from "../schema";
+import { IFlight, IChartFilter, Requestable, FetchStatus } from "../schema";
 import * as actions from "../state/actions";
 import { PassengerCountChart } from "../components/PassengerCountChart";
 import { ChartFilter } from "../components/ChartFilter";
@@ -25,7 +25,8 @@ class ChartPage extends React.Component<P, IFlightChartPage> {
     }
 
     componentDidMount() {
-        this.props.actions.getFlights();
+        if(!this.props.flights || this.props.flights.fetchStatus != FetchStatus.Success)
+            this.props.actions.getFlights();
     }
 
     public componentWillReceiveProps(nextProps: P) {
@@ -38,7 +39,7 @@ class ChartPage extends React.Component<P, IFlightChartPage> {
     render() {
         if (!this.props.flights)
             return <div />
-        if (this.props.flights.isFetching || this.props.flights.items == null)
+            if (this.props.flights.fetchStatus == FetchStatus.NotStarted || this.props.flights.fetchStatus == FetchStatus.Fetching)
             return <div>Loading...</div>;
         
         return (

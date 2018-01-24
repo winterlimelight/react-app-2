@@ -1,14 +1,14 @@
 import { IFlight, IChartFilter } from "../schema";
 
-export const ADD_FLIGHT = "ADD_FLIGHT";
+export const SET_FLIGHT = "SET_FLIGHT";
 export const REQUEST_FLIGHTS = "REQUEST_FLIGHTS";
 export const RECEIVED_FLIGHTS = "RECEIVED_FLIGHTS";
 export const CHANGE_CHART_FILTER = "CHANGE_CHART_FILTER";
 
 
 // action creators
-export const addFlight = (flight: IFlight) => {
-    return { type: ADD_FLIGHT, flight: flight }
+export const setFlight = (flight: IFlight) => {
+    return { type: SET_FLIGHT, flight: flight }
 }
 
 export const getFlights = () => {
