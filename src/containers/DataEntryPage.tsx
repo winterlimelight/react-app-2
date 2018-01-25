@@ -33,21 +33,25 @@ class DataEntryPage extends React.Component<P, IDataEntryPage> {
         if (this.props.flights.fetchStatus == FetchStatus.NotStarted || this.props.flights.fetchStatus == FetchStatus.Fetching)
             return <div>Loading...</div>;
 
-        let flightRows = this.props.flights.items.map(f => <FlightEntry flight={f} onUpdate={(ev: IFlight) => this.onEntryUpdate(ev)} />);
+        let flightRows = this.props.flights.items.map(f => <FlightEntry  key={f.Id} flight={f} onUpdate={(ev: IFlight) => this.onEntryUpdate(ev)} />);
 
         return <table>
-            <tr>
-                <th>Flight No.</th>
-                <th>From</th>
-                <th>To</th>
-                <th>Aircraft</th>
-                <th>Pax</th>
-                <th>On</th>
-            </tr>
-            {flightRows}
+            <thead>
+                <tr>
+                    <th>Flight No.</th>
+                    <th>From</th>
+                    <th>To</th>
+                    <th>Aircraft</th>
+                    <th>Pax</th>
+                    <th>On</th>
+                </tr>
+            </thead>
+            <tbody>
+                {flightRows}
+            </tbody>
         </table>
 
-        // TODO add row (set action with Id = -1)
+        // TODO add row (set action with monotonically increasing -ve id)
     }
 
     private onEntryUpdate(flight: IFlight) {
@@ -63,7 +67,6 @@ const mapStateToProps = (state: any) => {
 }
 
 const mapActionToProps = (dispatch: any) => {
-    // TODO try: import {bindActionCreators} from 'redux'; later
     return {
         actions: {
             getFlights: () => dispatch(actions.getFlights()),

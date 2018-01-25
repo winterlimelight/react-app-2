@@ -69,7 +69,6 @@ const mapStateToProps = (state: any) => {
 }
 
 const mapActionToProps = (dispatch: any) => {
-    // TODO try: import {bindActionCreators} from 'redux'; later
     return {
         actions: {
             getFlights: () => dispatch(actions.getFlights()),

@@ -2,6 +2,7 @@ import * as React from "react";
 import * as _ from "lodash";
 import { IFlight, IChartFilter } from "../schema";
 import { ChangeEvent } from "react";
+import { DateField } from "./DateField";
 
 type P = { flight: IFlight, onUpdate: Function };
 interface S extends IFlight {
@@ -17,7 +18,6 @@ export class FlightEntry extends React.Component<P, S> {
 
     public render() {
         let className = this.state.isDirty ? "dirty" : "";
-        // TODO date - separate display format from storage format
         return (
             <tr className={className}>
                 <td>
@@ -36,7 +36,7 @@ export class FlightEntry extends React.Component<P, S> {
                     <input type="number" value={this.state.Passengers} onChange={this.onPassengersChange}></input>
                 </td>
                 <td>
-                    <input type="text" name="On" value={this.state.On} onChange={this.onInputChange}></input>
+                    <DateField date={this.state.On} format="yyyyLLdd" onChange={this.onOnChange} />
                 </td>
                 <td>
                     <button type="button" onClick={this.handleAccept}>&#x2713;</button>
@@ -61,6 +61,10 @@ export class FlightEntry extends React.Component<P, S> {
         let pax = parseInt(ev.target.value);
         pax = isNaN(pax) ? 0 : pax;
         this.setState({ Passengers: pax, isDirty: true });
+    }
+
+    private onOnChange = (newDate: string) => {
+        this.setState({ On: newDate, isDirty: true });
     }
 
     private handleAccept = (event: React.MouseEvent<HTMLButtonElement>) => {

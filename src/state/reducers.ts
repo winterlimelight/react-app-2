@@ -18,7 +18,6 @@ function flights(state: Requestable<IFlight[]>, action: AnyAction): Requestable<
             return { fetchStatus: FetchStatus.Fetching, items: null };
 
         case ACTIONS.RECEIVED_FLIGHTS:
-            // TODO .Error if state or type indicates error...
             return { fetchStatus: FetchStatus.Success, items: action.flights };
     }
     return state || { fetchStatus: FetchStatus.NotStarted, items: null };
