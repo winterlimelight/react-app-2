@@ -1,10 +1,11 @@
 import * as React from "react";
 import * as _ from "lodash";
 import { IFlight, IChartFilter } from "../schema";
+import { isFlightValid } from "../validation";
 import { ChangeEvent } from "react";
 import { DateField } from "./DateField";
 
-type P = { flight: IFlight, onUpdate: Function };
+type P = { flight: IFlight, onUpdate: Function, isNew: boolean };
 interface S extends IFlight {
     isDirty: boolean
 }
@@ -13,11 +14,12 @@ export class FlightEntry extends React.Component<P, S> {
 
     constructor(props: P) {
         super(props);
-        this.state = { ...props.flight, isDirty: false };
+        this.state = { ...props.flight, isDirty: props.isNew };
     }
 
     public render() {
-        let className = this.state.isDirty ? "dirty" : "";
+        let isValid = isFlightValid(this.state);
+        let className = !isValid ? "invalid" : this.state.isDirty ? "dirty" : "";
         return (
             <tr className={className}>
                 <td>
@@ -51,7 +53,7 @@ export class FlightEntry extends React.Component<P, S> {
 
         let newState = {
             [name]: target.value,
-            isDirty: true
+            isDirty: true,
         } as any;
 
         this.setState(newState);
@@ -68,8 +70,15 @@ export class FlightEntry extends React.Component<P, S> {
     }
 
     private handleAccept = (event: React.MouseEvent<HTMLButtonElement>) => {
+        if(!isFlightValid(this.state)) {
+            this.setState({ isDirty: false });
+            return;
+        }
+
         this.props.onUpdate(_.omit(this.state, 'isDirty'));
         this.setState({ isDirty: false });
         event.preventDefault();
     }
+
+    
 }

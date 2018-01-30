@@ -38,6 +38,9 @@ nav {
         tr.dirty {
             background: lightgreen;
         }
+        tr.invalid {
+            background: lightcoral;
+        }
         td {
             padding: 1px 4px;
             input,

@@ -11,7 +11,7 @@ function flights(state: Requestable<IFlight[]>, action: AnyAction): Requestable<
             if(inx > 0)
                 items.splice(inx, 1, action.flight);
             else
-                state.items.push(action.flight);
+                items.push(action.flight);
             return { fetchStatus: state.fetchStatus, items: items }
 
         case ACTIONS.REQUEST_FLIGHTS:
