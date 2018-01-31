@@ -51,7 +51,7 @@ export class ChartFilter extends React.Component<P, IChartFilter> {
     }
 
     private createSelectItems(flights:IFlight[]) {
-        let origins = [""].concat(_.uniq(flights.map(f => f.From)));
+        let origins = [""].concat(_.uniq(flights.map(f => f.from)));
         return origins.map(f => <option key={f} value={f}>{f}</option>)
     } 
 }

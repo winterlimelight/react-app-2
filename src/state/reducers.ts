@@ -7,7 +7,7 @@ function flights(state: Requestable<IFlight[]>, action: AnyAction): Requestable<
     switch (action.type) {
         case ACTIONS.SET_FLIGHT:
             let items = [...state.items];
-            let inx = _.findIndex(items, f => f.Id == action.flight.Id);
+            let inx = _.findIndex(items, f => f.id == action.flight.id);
             if(inx > 0)
                 items.splice(inx, 1, action.flight);
             else

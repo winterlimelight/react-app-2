@@ -23,22 +23,22 @@ export class FlightEntry extends React.Component<P, S> {
         return (
             <tr className={className}>
                 <td>
-                    <input type="text" name="FlightNumber" value={this.state.FlightNumber} onChange={this.onInputChange}></input>
+                    <input type="text" name="FlightNumber" value={this.state.flightNumber} onChange={this.onInputChange}></input>
                 </td>
                 <td>
-                    <input type="text" name="From" value={this.state.From} onChange={this.onInputChange}></input>
+                    <input type="text" name="From" value={this.state.from} onChange={this.onInputChange}></input>
                 </td>
                 <td>
-                    <input type="text" name="To" value={this.state.To} onChange={this.onInputChange}></input>
+                    <input type="text" name="To" value={this.state.to} onChange={this.onInputChange}></input>
                 </td>
                 <td>
-                    <input type="text" name="Aircraft" value={this.state.Aircraft} onChange={this.onInputChange}></input>
+                    <input type="text" name="Aircraft" value={this.state.aircraft} onChange={this.onInputChange}></input>
                 </td>
                 <td>
-                    <input type="number" value={this.state.Passengers} onChange={this.onPassengersChange}></input>
+                    <input type="number" value={this.state.passengers} onChange={this.onPassengersChange}></input>
                 </td>
                 <td>
-                    <DateField date={this.state.On} format="yyyyLLdd" onChange={this.onOnChange} />
+                    <DateField date={this.state.on} format="yyyyLLdd" onChange={this.onOnChange} />
                 </td>
                 <td>
                     <button type="button" onClick={this.handleAccept}>&#x2713;</button>
@@ -62,11 +62,11 @@ export class FlightEntry extends React.Component<P, S> {
     private onPassengersChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
         let pax = parseInt(ev.target.value);
         pax = isNaN(pax) ? 0 : pax;
-        this.setState({ Passengers: pax, isDirty: true });
+        this.setState({ passengers: pax, isDirty: true });
     }
 
     private onOnChange = (newDate: string) => {
-        this.setState({ On: newDate, isDirty: true });
+        this.setState({ on: newDate, isDirty: true });
     }
 
     private handleAccept = (event: React.MouseEvent<HTMLButtonElement>) => {

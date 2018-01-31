@@ -6,13 +6,18 @@ export class Requestable<T> {
 }
 
 export interface IFlight {
-    "Id": number;
-    "FlightNumber": string;
-    "From": string;
-    "To": string;
-    "Aircraft": string;
-    "Passengers": number;
-    "On": string;
+    id: number;
+    flightNumber: string;
+    from: string;
+    to: string;
+    aircraft: string;
+    passengers: number;
+    on: string;
+}
+
+export interface IAirport {
+    code: string;
+    name: string;
 }
 
 export interface IChartFilter {

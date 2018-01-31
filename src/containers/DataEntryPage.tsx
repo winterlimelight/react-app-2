@@ -40,8 +40,8 @@ class DataEntryPage extends React.Component<P, S> {
         if (this.props.flights.fetchStatus == FetchStatus.NotStarted || this.props.flights.fetchStatus == FetchStatus.Fetching)
             return <div>Loading...</div>;
 
-        let savedFlightRows = this.props.flights.items.map(f => <FlightEntry key={f.Id} flight={f} isNew={false} onUpdate={this.onEntryUpdate} />)
-        let newFlightRows = this.state.newFlights.map(f => <FlightEntry key={f.Id} flight={f} isNew={true} onUpdate={this.onEntryUpdate} />)
+        let savedFlightRows = this.props.flights.items.map(f => <FlightEntry key={f.id} flight={f} isNew={false} onUpdate={this.onEntryUpdate} />)
+        let newFlightRows = this.state.newFlights.map(f => <FlightEntry key={f.id} flight={f} isNew={true} onUpdate={this.onEntryUpdate} />)
 
         return <div>
             <table>
@@ -65,7 +65,7 @@ class DataEntryPage extends React.Component<P, S> {
     }
 
     private addFlight = () => {
-        let flight = { Id: nextId--, Passengers: 0,  On: "" } as IFlight
+        let flight = { id: nextId--, passengers: 0,  on: "" } as IFlight
         console.log("addFlight " + JSON.stringify(flight));
         this.setState({ newFlights: this.state.newFlights.concat([flight]) });
     }
@@ -73,7 +73,7 @@ class DataEntryPage extends React.Component<P, S> {
     private onEntryUpdate = (flight: IFlight) => {
         console.log("onEntryUpdate " + JSON.stringify(flight));
         // ensure flight is removed from newFlights if it was just created
-        this.setState({ newFlights: this.state.newFlights.filter(f => f.Id != flight.Id)});
+        this.setState({ newFlights: this.state.newFlights.filter(f => f.id != flight.id)});
 
         this.props.actions.updateFlight(flight);
     }

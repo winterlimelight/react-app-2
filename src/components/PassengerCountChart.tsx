@@ -45,16 +45,16 @@ export class PassengerCountChart extends React.Component<P, {}> {
         }
 
         // destinations
-        let destinations = _.uniq(_.map(this.props.flights, f => f.To));
+        let destinations = _.uniq(_.map(this.props.flights, f => f.to));
         // assembly columns by aircraft types
-        let byAircraft = _.groupBy(this.props.flights, f => f.Aircraft);
+        let byAircraft = _.groupBy(this.props.flights, f => f.aircraft);
         // aggregate each group by destination
         let dataCols = _.map(byAircraft, (flights, aircraft) => {
             let col = [aircraft];
             for (let dest of destinations) {
                 let paxToDest = flights
-                    .filter(f => f.To == dest)
-                    .reduce((acc, val) => acc + val.Passengers, 0);
+                    .filter(f => f.to == dest)
+                    .reduce((acc, val) => acc + val.passengers, 0);
                 col.push(paxToDest.toString());
             }
             return col;

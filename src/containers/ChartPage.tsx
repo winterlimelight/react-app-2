@@ -55,7 +55,7 @@ class ChartPage extends React.Component<P, IFlightChartPage> {
 
         let flights = this.props.flights.items;
         if (filter.origin)
-            flights = flights.filter(f => f.From == filter.origin);
+            flights = flights.filter(f => f.from == filter.origin);
         this.setState({ filteredFlights: flights, filter: filter });
         this.props.actions.setFilter(filter);
     }
