@@ -2,8 +2,8 @@ import * as React from "react";
 import * as _ from "lodash";
 import { IFlight, IChartFilter } from "../schema";
 import { isFlightValid } from "../validation";
-import { ChangeEvent } from "react";
 import { DateField } from "./DateField";
+import AirportDropdown from "./AirportDropdown";
 
 type P = { flight: IFlight, onUpdate: Function, isNew: boolean };
 interface S extends IFlight {
@@ -20,13 +20,14 @@ export class FlightEntry extends React.Component<P, S> {
     public render() {
         let isValid = isFlightValid(this.state);
         let className = !isValid ? "invalid" : this.state.isDirty ? "dirty" : "";
+        //<!--<input type="text" name="From" value={this.state.from} onChange={this.onInputChange}></input>-->
         return (
             <tr className={className}>
                 <td>
                     <input type="text" name="FlightNumber" value={this.state.flightNumber} onChange={this.onInputChange}></input>
                 </td>
                 <td>
-                    <input type="text" name="From" value={this.state.from} onChange={this.onInputChange}></input>
+                    <AirportDropdown value={this.state.from} onChange={this.onInputChange} />
                 </td>
                 <td>
                     <input type="text" name="To" value={this.state.to} onChange={this.onInputChange}></input>

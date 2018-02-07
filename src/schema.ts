@@ -25,6 +25,7 @@ export interface IChartFilter {
 }
 
 export interface IApplicationState {
+    airports: Requestable<IAirport[]>;
     flights: Requestable<IFlight[]>;
     chartFilter: IChartFilter;
 }

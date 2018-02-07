@@ -1,32 +1,40 @@
-import { IFlight, IChartFilter } from "../schema";
+import { IFlight, IChartFilter, IApplicationState, FetchStatus } from "../schema";
 
 export const SET_FLIGHT = "SET_FLIGHT";
 export const REQUEST_FLIGHTS = "REQUEST_FLIGHTS";
 export const RECEIVED_FLIGHTS = "RECEIVED_FLIGHTS";
+
+export const REQUEST_AIRPORTS = "REQUEST_AIRPORTS";
+export const RECEIVED_AIRPORTS = "RECEIVED_AIRPORTS";
+
 export const CHANGE_CHART_FILTER = "CHANGE_CHART_FILTER";
 
-
-// action creators
-export const setFlight = (flight: IFlight) => {
-    return { type: SET_FLIGHT, flight: flight }
+const getAsync = (dispatch: any, url: string, requestDispatchType: string, receiveDispatchType: string) => {
+    dispatch({ type: requestDispatchType });
+    fetch("http://localhost:8080/fakedata/" + url)
+        // TODO deliberately add delay via setTimeout to test handling of data not arrived
+        .then(resp => resp.json())
+        .then(json => dispatch({ type: receiveDispatchType, json: json }))
+        .catch(e => dispatch({ type: receiveDispatchType, json: null, error: e }));
 }
 
 export const getFlights = () => {
-    return (dispatch:any) => {
-        dispatch(requestFlights());
-        fetch("http://localhost:8080/fakedata/flights.json")
-            .then(resp => resp.json())
-            .then(json => dispatch(receivedFlights(json)))
-            .catch(e => dispatch(receivedFlights(null)));
+    return (dispatch: any) => {
+        getAsync(dispatch, "flights.json", REQUEST_FLIGHTS, RECEIVED_FLIGHTS)
     }
 }
 
-const requestFlights = () => {
-    return { type: REQUEST_FLIGHTS }
+export const getAirports = (force: boolean = false) => {
+    return (dispatch: any, getState: () => IApplicationState) => {
+        let state = getState();
+        if (force || state.airports.fetchStatus == FetchStatus.NotStarted)
+            getAsync(dispatch, "airports.json", REQUEST_AIRPORTS, RECEIVED_AIRPORTS);
+    }
 }
 
-const receivedFlights = (flights: IFlight[]) => {
-    return { type: RECEIVED_FLIGHTS, flights: flights }
+
+export const setFlight = (flight: IFlight) => {
+    return { type: SET_FLIGHT, flight: flight }
 }
 
 export const setChartFilter = (chartFilter: IChartFilter) => {
