@@ -25,21 +25,21 @@ class ChartPage extends React.Component<P, IFlightChartPage> {
     }
 
     componentDidMount() {
-        if(!this.props.flights || this.props.flights.fetchStatus != FetchStatus.Success)
-            this.props.actions.getFlights();
+        this.props.actions.getFlights();
     }
 
     public componentWillReceiveProps(nextProps: P) {
-        console.log("componentWillReceiveProps " + JSON.stringify(this.state) + JSON.stringify(nextProps));
+        console.log("ChartPage.componentWillReceiveProps() " + JSON.stringify(this.state) + JSON.stringify(nextProps));
 
         if(!this.state.initialized && nextProps.flights && nextProps.flights.items)
             this.setState({ initialized: true, filteredFlights: [...nextProps.flights.items] });
     }
 
     render() {
+        console.log("ChartPage.render()");
         if (!this.props.flights)
             return <div />
-            if (this.props.flights.fetchStatus == FetchStatus.NotStarted || this.props.flights.fetchStatus == FetchStatus.Fetching)
+        if (this.props.flights.fetchStatus == FetchStatus.NotStarted || this.props.flights.fetchStatus == FetchStatus.Fetching)
             return <div>Loading...</div>;
         
         return (

@@ -11,11 +11,12 @@ export const CHANGE_CHART_FILTER = "CHANGE_CHART_FILTER";
 
 const getAsync = (dispatch: any, url: string, requestDispatchType: string, receiveDispatchType: string) => {
     dispatch({ type: requestDispatchType });
-    fetch("http://localhost:8080/fakedata/" + url)
-        // TODO deliberately add delay via setTimeout to test handling of data not arrived
-        .then(resp => resp.json())
-        .then(json => dispatch({ type: receiveDispatchType, json: json }))
-        .catch(e => dispatch({ type: receiveDispatchType, json: null, error: e }));
+    // setTimeout(() => { // TEMP - for testing
+        fetch("http://localhost:8080/fakedata/" + url)
+            .then(resp => resp.json())
+            .then(json => dispatch({ type: receiveDispatchType, json: json }))
+            .catch(e => dispatch({ type: receiveDispatchType, json: null, error: e }));
+    // }, 2000);
 }
 
 export const getFlights = () => {

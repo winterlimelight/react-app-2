@@ -11,7 +11,11 @@
     display: none;
 }
 
-.react-autosuggest__container--open .react-autosuggest__suggestions-container {
+.airport-dropdown {
+    position: relative;
+}
+
+.react-autosuggest__container--open .react-autosuggest__suggestions-container, .airport-dropdown .no-suggestions-container {
     display: block;
     position: absolute;
     top: 1.4em; /* global line-height...? */
@@ -29,7 +33,7 @@
     list-style-type: none;
 }
 
-.react-autosuggest__suggestion {
+.react-autosuggest__suggestion, .no-suggestions-container {
     cursor: pointer;
     padding: 10px 20px;
 }

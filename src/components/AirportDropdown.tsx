@@ -1,17 +1,18 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import * as Autosuggest from 'react-autosuggest';
-import { IAirport, Requestable } from "../schema";
+import { IAirport, Requestable, FetchStatus } from "../schema";
 import * as actions from "../state/actions";
 
 type P = { value: string, onChange: Function, airports: Requestable<IAirport[]>, actions: any }
-type S = { value: string, suggestions: IAirport[] }
+type S = { value: string, suggestions: IAirport[], hasSuggestions: boolean }
 
 class AirportDropdown extends React.Component<P, S> {
     constructor(props: P) {
         super(props);
         this.state = {
             value: props.value,
+            hasSuggestions: null,
             suggestions: []
         };
     }
@@ -25,6 +26,7 @@ class AirportDropdown extends React.Component<P, S> {
         this.setState({
             value: change.newValue
         });
+        this.props.onChange(change.newValue);
     };
 
     // Autosuggest will call this function every time you need to update suggestions.
@@ -35,6 +37,7 @@ class AirportDropdown extends React.Component<P, S> {
         console.log("AirportDropdown.onSuggestionsFetchRequested() request=" + JSON.stringify(request) + " filtered=" + JSON.stringify(airports));
 
         this.setState({
+            hasSuggestions: airports.length > 0,
             suggestions: airports
         });
     };
@@ -46,43 +49,34 @@ class AirportDropdown extends React.Component<P, S> {
         });
     };
 
-    private getSuggestionValue = (suggestion: IAirport) => suggestion.name;
-
-    // TODO figure out what to do if airports haven't been received (i.e. draw a spinner)
-    private renderSuggestion = (suggestion: IAirport) => (
-        <div>
-            {suggestion.name}
-        </div>
-    );
+    private getSuggestionValue = (suggestion: IAirport) => suggestion.code;
+    private renderSuggestion = (suggestion: IAirport) => <div>{suggestion.name}</div>
 
     render() {
         console.log("AirportDropdown.render()");
         const { value, suggestions } = this.state;
 
-        // Autosuggest will pass through all these props to the input.
         const inputProps = {
             onChange: this.onChange,
             placeholder: 'Airport',
-            value: value  // TODO this is code - lookup display value (if available - async...)
+            value: value
         };
 
-        // Finally, render it!
+        let noSuggestionsContainer = null;
+        if (this.state.hasSuggestions === false)
+            noSuggestionsContainer = <div className="no-suggestions-container">No suggestions</div>;
+
         return (
-            <div>
-            <Autosuggest
-                suggestions={suggestions}
-                onSuggestionsFetchRequested={this.onSuggestionsFetchRequested.bind(this)}
-                onSuggestionsClearRequested={this.onSuggestionsClearRequested.bind(this)}
-                getSuggestionValue={this.getSuggestionValue.bind(this)}
-                renderSuggestion={this.renderSuggestion.bind(this)}
-                inputProps={inputProps}
-            />{
-                /* TODO this prob needs its own variable....
-                !suggestions.length &&
-                  <div className="no-suggestions">
-                    No suggestions
-                  </div>*/
-              }
+            <div className="airport-dropdown">
+                <Autosuggest
+                    suggestions={suggestions}
+                    onSuggestionsFetchRequested={this.onSuggestionsFetchRequested.bind(this)}
+                    onSuggestionsClearRequested={this.onSuggestionsClearRequested.bind(this)}
+                    getSuggestionValue={this.getSuggestionValue.bind(this)}
+                    renderSuggestion={this.renderSuggestion.bind(this)}
+                    inputProps={inputProps}
+                />
+                {noSuggestionsContainer}
             </div>
         );
     }

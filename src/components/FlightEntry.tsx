@@ -27,10 +27,10 @@ export class FlightEntry extends React.Component<P, S> {
                     <input type="text" name="FlightNumber" value={this.state.flightNumber} onChange={this.onInputChange}></input>
                 </td>
                 <td>
-                    <AirportDropdown value={this.state.from} onChange={this.onInputChange} />
+                    <AirportDropdown value={this.state.from} onChange={this.onFromChange} />
                 </td>
                 <td>
-                    <input type="text" name="To" value={this.state.to} onChange={this.onInputChange}></input>
+                    <AirportDropdown value={this.state.to} onChange={this.onToChange} />
                 </td>
                 <td>
                     <input type="text" name="Aircraft" value={this.state.aircraft} onChange={this.onInputChange}></input>
@@ -60,15 +60,17 @@ export class FlightEntry extends React.Component<P, S> {
         this.setState(newState);
     }
 
+    private onFromChange = (value:string) => this.setState({ from: value, isDirty: true });
+    private onToChange = (value:string) => this.setState({ to: value, isDirty: true });
+    private onOnChange = (newDate: string) => this.setState({ on: newDate, isDirty: true });
+
     private onPassengersChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
         let pax = parseInt(ev.target.value);
         pax = isNaN(pax) ? 0 : pax;
         this.setState({ passengers: pax, isDirty: true });
     }
 
-    private onOnChange = (newDate: string) => {
-        this.setState({ on: newDate, isDirty: true });
-    }
+    
 
     private handleAccept = (event: React.MouseEvent<HTMLButtonElement>) => {
         if(!isFlightValid(this.state)) {
